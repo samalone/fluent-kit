@@ -1,13 +1,13 @@
 extension Parent: AnyEagerLoadable {
-    var eagerLoadKey: String {
+    public var eagerLoadKey: String {
         return "p:" + self.$id.key
     }
 
-    var eagerLoadValueDescription: CustomStringConvertible? {
+    public var eagerLoadValueDescription: CustomStringConvertible? {
         return self.eagerLoadedValue
     }
 
-    func eagerLoad(from eagerLoads: EagerLoads) throws {
+    public func eagerLoad(from eagerLoads: EagerLoads) throws {
         guard let request = eagerLoads.requests[self.eagerLoadKey] else {
             return
         }
@@ -32,15 +32,15 @@ extension Parent: EagerLoadable {
 
 
 extension OptionalParent: AnyEagerLoadable {
-    var eagerLoadKey: String {
+    public var eagerLoadKey: String {
         return "p:" + self.$id.key
     }
 
-    var eagerLoadValueDescription: CustomStringConvertible? {
+    public var eagerLoadValueDescription: CustomStringConvertible? {
         return self.eagerLoadedValue
     }
 
-    func eagerLoad(from eagerLoads: EagerLoads) throws {
+    public func eagerLoad(from eagerLoads: EagerLoads) throws {
         guard let request = eagerLoads.requests[self.eagerLoadKey] else {
             return
         }

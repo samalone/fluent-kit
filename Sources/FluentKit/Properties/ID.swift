@@ -30,14 +30,14 @@ public final class ID<Value>: AnyID, FieldRepresentable
 
     public let field: Field<Value?>
     let generator: Generator
-    var exists: Bool
-    var cachedOutput: DatabaseOutput?
+    public var exists: Bool
+    public var cachedOutput: DatabaseOutput?
 
     public var key: String {
         return self.field.key
     }
 
-    var inputValue: DatabaseQuery.Value? {
+    public var inputValue: DatabaseQuery.Value? {
         get {
             return self.field.inputValue
         }
@@ -66,7 +66,7 @@ public final class ID<Value>: AnyID, FieldRepresentable
         self.cachedOutput = nil
     }
 
-    func generate() {
+    public func generate() {
         switch self.generator {
         case .database:
             self.inputValue = .default
@@ -79,17 +79,17 @@ public final class ID<Value>: AnyID, FieldRepresentable
         }
     }
 
-    func output(from output: DatabaseOutput) throws {
+    public func output(from output: DatabaseOutput) throws {
         self.exists = true
         self.cachedOutput = output
         try self.field.output(from: output)
     }
 
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         try self.field.encode(to: encoder)
     }
 
-    func decode(from decoder: Decoder) throws {
+    public func decode(from decoder: Decoder) throws {
         try self.field.decode(from: decoder)
     }
 }

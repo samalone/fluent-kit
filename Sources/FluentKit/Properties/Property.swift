@@ -1,10 +1,10 @@
-protocol AnyProperty: class {
+public protocol AnyProperty: class {
     func output(from output: DatabaseOutput) throws
     func encode(to encoder: Encoder) throws
     func decode(from decoder: Decoder) throws
 }
 
-extension AnyProperty where Self: FieldRepresentable {
+public extension AnyProperty where Self: FieldRepresentable {
     func output(from output: DatabaseOutput) throws {
         try self.field.output(from: output)
     }
@@ -18,12 +18,12 @@ extension AnyProperty where Self: FieldRepresentable {
     }
 }
 
-protocol AnyField: AnyProperty {
+public protocol AnyField: AnyProperty {
     var key: String { get }
     var inputValue: DatabaseQuery.Value? { get set }
 }
 
-extension AnyField where Self: FieldRepresentable {
+public extension AnyField where Self: FieldRepresentable {
     var key: String {
         return self.field.key
     }
@@ -39,13 +39,13 @@ public protocol EagerLoadable {
         where Model: FluentKit.Model
 }
 
-protocol AnyEagerLoadable: AnyProperty {
+public protocol AnyEagerLoadable: AnyProperty {
     var eagerLoadKey: String { get }
     var eagerLoadValueDescription: CustomStringConvertible? { get }
     func eagerLoad(from eagerLoads: EagerLoads) throws
 }
 
-protocol AnyID: AnyField {
+public protocol AnyID: AnyField {
     func generate()
     var exists: Bool { get set }
     var cachedOutput: DatabaseOutput? { get set }
@@ -125,29 +125,29 @@ struct ModelEncoder {
     }
 }
 
-enum _ModelCodingKey: CodingKey {
+public enum _ModelCodingKey: CodingKey {
     case string(String)
     case int(Int)
     
-    var stringValue: String {
+    public var stringValue: String {
         switch self {
         case .int(let int): return int.description
         case .string(let string): return string
         }
     }
     
-    var intValue: Int? {
+    public var intValue: Int? {
         switch self {
         case .int(let int): return int
         case .string(let string): return Int(string)
         }
     }
     
-    init?(stringValue: String) {
+    public init?(stringValue: String) {
         self = .string(stringValue)
     }
     
-    init?(intValue: Int) {
+    public init?(intValue: Int) {
         self = .int(intValue)
     }
 }

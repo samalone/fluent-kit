@@ -58,7 +58,7 @@ public final class Timestamp: AnyField, FieldRepresentable {
         return self.field.key
     }
 
-    var inputValue: DatabaseQuery.Value? {
+    public var inputValue: DatabaseQuery.Value? {
         get {
             return self.field.inputValue
         }
@@ -89,15 +89,15 @@ public final class Timestamp: AnyField, FieldRepresentable {
         self.inputValue = .bind(date)
     }
 
-    func output(from output: DatabaseOutput) throws {
+    public func output(from output: DatabaseOutput) throws {
         try self.field.output(from: output)
     }
 
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         try self.field.encode(to: encoder)
     }
 
-    func decode(from decoder: Decoder) throws {
+    public func decode(from decoder: Decoder) throws {
         try self.field.decode(from: decoder)
     }
 }

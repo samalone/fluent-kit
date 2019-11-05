@@ -59,7 +59,7 @@ public final class Children<From, To>: AnyProperty
 
     // MARK: Property
 
-    func output(from output: DatabaseOutput) throws {
+    public func output(from output: DatabaseOutput) throws {
         let key = From.key(for: \._$id)
         if output.contains(key) {
             self.idValue = try output.decode(key, as: From.IDValue.self)
@@ -67,14 +67,14 @@ public final class Children<From, To>: AnyProperty
     }
 
     // MARK: Codable
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         if let rows = self.eagerLoadedValue {
             var container = encoder.singleValueContainer()
             try container.encode(rows)
         }
     }
 
-    func decode(from decoder: Decoder) throws {
+    public func decode(from decoder: Decoder) throws {
         // don't decode
     }
 }
@@ -89,7 +89,7 @@ extension Children: EagerLoadable {
 }
 
 extension Children: AnyEagerLoadable {
-    var eagerLoadKey: String {
+    public var eagerLoadKey: String {
         let ref = To()
         switch self.parentKey {
         case .optional(let optional):
@@ -99,7 +99,7 @@ extension Children: AnyEagerLoadable {
         }
     }
 
-    var eagerLoadValueDescription: CustomStringConvertible? {
+    public var eagerLoadValueDescription: CustomStringConvertible? {
         return self.eagerLoadedValue
     }
 
@@ -110,7 +110,7 @@ extension Children: AnyEagerLoadable {
         return rows
     }
 
-    func eagerLoad(from eagerLoads: EagerLoads) throws {
+    public func eagerLoad(from eagerLoads: EagerLoads) throws {
         guard let request = eagerLoads.requests[self.eagerLoadKey] else {
             return
         }

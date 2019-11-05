@@ -133,7 +133,7 @@ private final class LazyEncoder: Encoder {
     }
 }
 
-extension Model {
+public extension Model {
     static func key<Field>(for field: KeyPath<Self, Field>) -> String
         where Field: FieldRepresentable
     {
@@ -197,13 +197,13 @@ private struct InfoKey: ExpressibleByStringLiteral, Hashable, CustomStringConver
     }
 }
 
-extension Model {
+public extension Model {
     var _$id: ID<IDValue> {
         self.anyID as! ID<IDValue>
     }
 }
 
-extension AnyModel {
+public extension AnyModel {
     func output(from output: DatabaseOutput) throws {
         try self.properties.forEach { (_, property) in
             try property.output(from: output)
@@ -219,7 +219,7 @@ extension AnyModel {
 
     // MARK: Joined
 
-    public func joined<Joined>(_ model: Joined.Type) throws -> Joined.Model
+    func joined<Joined>(_ model: Joined.Type) throws -> Joined.Model
         where Joined: ModelAlias
     {
         guard let output = self.anyID.cachedOutput else {
@@ -233,7 +233,7 @@ extension AnyModel {
     }
 
 
-    public func joined<Joined>(_ model: Joined.Type) throws -> Joined
+    func joined<Joined>(_ model: Joined.Type) throws -> Joined
         where Joined: FluentKit.Model
     {
         guard let output = self.anyID.cachedOutput else {
