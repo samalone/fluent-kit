@@ -78,7 +78,7 @@ public final class Siblings<From, To, Through>: AnyProperty
             .filter(Through.self, self.from.appending(path: \.$id) == fromID)
     }
 
-    func output(from output: DatabaseOutput) throws {
+    public func output(from output: DatabaseOutput) throws {
         let key = From.key(for: \._$id)
         if output.contains(key) {
             self.idValue = try output.decode(key, as: From.IDValue.self)
@@ -87,14 +87,14 @@ public final class Siblings<From, To, Through>: AnyProperty
 
     // MARK: Codable
 
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         if let rows = self.eagerLoadedValue {
             var container = encoder.singleValueContainer()
             try container.encode(rows)
         }
     }
 
-    func decode(from decoder: Decoder) throws {
+    public func decode(from decoder: Decoder) throws {
         // don't decode
     }
 }
@@ -112,12 +112,12 @@ extension Siblings: EagerLoadable {
 
 
 extension Siblings: AnyEagerLoadable {
-    var eagerLoadKey: String {
+    public var eagerLoadKey: String {
         let ref = Through()
         return "s:" + ref[keyPath: self.from].key + "+" + ref[keyPath: self.to].key
     }
 
-    var eagerLoadValueDescription: CustomStringConvertible? {
+    public var eagerLoadValueDescription: CustomStringConvertible? {
         return self.eagerLoadedValue
     }
 
@@ -128,7 +128,7 @@ extension Siblings: AnyEagerLoadable {
         return rows
     }
 
-    func eagerLoad(from eagerLoads: EagerLoads) throws {
+    public func eagerLoad(from eagerLoads: EagerLoads) throws {
         guard let request = eagerLoads.requests[self.eagerLoadKey] else {
             return
         }

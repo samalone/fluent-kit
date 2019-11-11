@@ -6,7 +6,7 @@ public final class QueryBuilder<Model>
     public var query: DatabaseQuery
 
     public let database: Database
-    internal var eagerLoads: EagerLoads
+    public var eagerLoads: EagerLoads
     internal var includeDeleted: Bool
     internal var joinedModels: [AnyModel]
     

@@ -1,12 +1,12 @@
-protocol EagerLoadRequest: class, CustomStringConvertible {
+public protocol EagerLoadRequest: class, CustomStringConvertible {
     func prepare(query: inout DatabaseQuery)
     func run(models: [AnyModel], on database: Database) -> EventLoopFuture<Void>
 }
 
-final class EagerLoads: CustomStringConvertible {
-    var requests: [String: EagerLoadRequest]
+public final class EagerLoads: CustomStringConvertible {
+    public var requests: [String: EagerLoadRequest]
 
-    var description: String {
+    public var description: String {
         return self.requests.description
     }
 

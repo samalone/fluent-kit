@@ -3,8 +3,9 @@ public final class Field<Value>: AnyField, FieldRepresentable
     where Value: Codable
 {
     public let key: String
+    public var inputValue: DatabaseQuery.Value?
+    
     var outputValue: Value?
-    var inputValue: DatabaseQuery.Value?
 
     public var field: Field<Value> {
         return self
@@ -42,7 +43,7 @@ public final class Field<Value>: AnyField, FieldRepresentable
 
     // MARK: Property
 
-    func output(from output: DatabaseOutput) throws {
+    public func output(from output: DatabaseOutput) throws {
         if output.contains(self.key) {
             self.inputValue = nil
             do {
@@ -53,12 +54,12 @@ public final class Field<Value>: AnyField, FieldRepresentable
         }
     }
 
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(self.wrappedValue)
     }
 
-    func decode(from decoder: Decoder) throws {
+    public func decode(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let valueType = Value.self as? _Optional.Type {
             if container.decodeNil() {
